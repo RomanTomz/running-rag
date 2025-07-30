@@ -307,6 +307,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "chromadb" },
+    { name = "garminconnect" },
     { name = "openai" },
     { name = "pandas" },
     { name = "python-dotenv" },
@@ -317,11 +318,38 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "chromadb", specifier = ">=1.0.15" },
+    { name = "garminconnect", specifier = ">=0.2.28" },
     { name = "openai", specifier = ">=1.97.1" },
     { name = "pandas", specifier = ">=2.3.1" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "rich", specifier = ">=14.1.0" },
     { name = "typer", specifier = ">=0.16.0" },
+]
+
+[[package]]
+name = "garminconnect"
+version = "0.2.28"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "garth" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/06/1f/d5aee4c4ff0dac960938f912f5c422c818bf55402b9b12264f2de8c5948d/garminconnect-0.2.28.tar.gz", hash = "sha256:51852b8035dad8ef76c906e7bf4c64a8dc7530c745e5fa3bf0c1e85e67313bb8", size = 148205 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/95/f8/8e21a6d1e4e51ae6aae1ef0a65e0ae1ed6bfa114331ae1196376d37f6506/garminconnect-0.2.28-py3-none-any.whl", hash = "sha256:c3206f1c5d256b36d0498788b96275f344312968b5c415d48b6b7c7b7f68a5cd", size = 84413 },
+]
+
+[[package]]
+name = "garth"
+version = "0.5.17"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "requests" },
+    { name = "requests-oauthlib" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/37/ca/6a2b9dc95fd36bb098ec6318c21fd8e2419e5b770bd8c618b9d2d1077362/garth-0.5.17.tar.gz", hash = "sha256:48ede938c38b2fd70777e55c7025538775d93c1047f43cc7c4481f2a04b109cb", size = 1817853 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ed/a5/7b22d90cc735abda0526aa708f54a729a966e50f7acef7d0b57dd48d0823/garth-0.5.17-py3-none-any.whl", hash = "sha256:4b109140dfacea6d96060bad8dead8da36699a0729cb0c4ca3b31fa49f860e88", size = 32973 },
 ]
 
 [[package]]
