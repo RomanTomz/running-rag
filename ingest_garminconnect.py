@@ -11,3 +11,4 @@ def summarise_activity_from_gc(a: dict) -> str:
     def add(k, v):
         if v is not None and v != "":
             parts.append(f"{k}: {v}")
+    add("date")
