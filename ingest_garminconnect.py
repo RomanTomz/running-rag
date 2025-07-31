@@ -6,4 +6,8 @@ from openai import OpenAI
 import chromadb 
 from garminconnect import Garmin
 
-def summarise_activity_from_gc(a: )
+def summarise_activity_from_gc(a: dict) -> str:
+    parts = []
+    def add(k, v):
+        if v is not None and v != "":
+            parts.append(f"{k}: {v}")
