@@ -30,3 +30,15 @@ def pace_min_per_km(duration_s, distance_m):
         mins += 1
         secs = 0
     return f"{mins:02d}:{secs:02d} min/km"
+
+def clean_labels(s):
+    if not s: return ""
+    return str(s).replace("_", " ").title()
+
+def detect_session_tag(activity_name, training_effect_label, lactate_label):
+    name = (str(activity_name) or "").lower()
+    tel = (str(training_effect_label) or "").lower()
+    ltl = (str(lactate_label) or "").lower()
+    if any (k in name for k in ["tempo", "threshold", "lt"]): return "tempo"
+    if any (k in tel for k in ["tempo", "threshold"]): return "tempo"
+    if "lactate_threshold" in ltl: return "tempo"
