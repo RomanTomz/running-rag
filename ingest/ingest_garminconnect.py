@@ -6,9 +6,15 @@ from openai import OpenAI
 import chromadb 
 from garminconnect import Garmin
 
-def summarise_activity_from_gc(a: dict) -> str:
-    parts = []
-    def add(k, v):
-        if v is not None and v != "":
-            parts.append(f"{k}: {v}")
-    add("date")
+def get_activities(
+    start_date: date = date.today() - timedelta(days=30),
+    end_date: date = date.today(),
+    username: str = os.getenv("GARMIN_USERNAME"),
+    password: str = os.getenv("GARMIN_PASSWORD"),
+) -> list:
+    if not username or not password:
+        raise ValueError("Please set GARMIN_USERNAME and GARMIN_PASSWORD in your environment variables.")
+
+    gc = Garmin(username, password)
+    gc.login()
+    return gc.get_activities(start_date, end_date)
