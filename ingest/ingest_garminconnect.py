@@ -18,3 +18,9 @@ def get_activities(
     gc = Garmin(username, password)
     gc.login()
     return gc.get_activities(start_date, end_date)
+
+def create_df(activities: dict) -> pd.DataFrame:
+    """Convert Garmin activities to a DataFrame."""
+    df = pd.json_normalize(activities)
+    # Ensure all columns are strings for consistency
+    return df
