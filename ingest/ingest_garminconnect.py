@@ -24,3 +24,9 @@ def create_df(activities: dict) -> pd.DataFrame:
     df = pd.json_normalize(activities)
     # Ensure all columns are strings for consistency
     return df
+
+if __name__ == "__main__":
+    load_dotenv()
+    activities = get_activities()
+    df = create_df(activities)
+    print(df.head())
