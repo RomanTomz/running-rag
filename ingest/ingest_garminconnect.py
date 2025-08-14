@@ -24,14 +24,21 @@ def get_activities(
 def create_df(activities: dict) -> pd.DataFrame:
     """Convert Garmin activities to a DataFrame."""
     df = pd.json_normalize(activities)
-    # Ensure all columns are strings for consistency
     return df
 
-def dump_all_
+def get_all_activities(start=0, page_size=50):
+    all_activities = []
+    while True:
+        activities = get_activities(start, page_size)
+        if not activities:
+            break
+        all_activities.extend(activities)
+        start += page_size
+    return all_activities
 
 if __name__ == "__main__":
     load_dotenv()
-    activities = get_activities()
+    activities = get_activities(0, 100)
     df = create_df(activities)
     print(df.head())
 
