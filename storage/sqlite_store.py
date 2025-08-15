@@ -58,3 +58,17 @@ def get_existing_ids() -> set[int]:
         return {int(r[0]) for r in rows}
     finally:
         con.close()
+
+def upsert_activities(df: pd.DataFrame) -> tuple[int, int, list[int]]:
+    now = int(time.time())
+    inserted = 0
+    skipped = 0
+    new_ids: list[int] = []
+
+    con = _connect()
+    try:
+        
+
+if __name__ == "__main__":
+    print(ROOT)
+    print(DB_PATH)
