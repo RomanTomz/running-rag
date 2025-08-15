@@ -67,7 +67,14 @@ def upsert_activities(df: pd.DataFrame) -> tuple[int, int, list[int]]:
 
     con = _connect()
     try:
-        
+        with con:
+            for _, row in df.iterrows():
+                if "activity_id" not in row or pd.isna(row["activity_id"]):
+                    continue
+                aid = int(row["activity_id"])
+                start = str(row.get("startTimeLocal") or row.get("startTimeGMT", "") or "")
+                type_key = str(row.get("activityType.typeKey") or row.get("sportTypeId") or "")
+                payload = json.dumps(row.to_dict(), ensure_ascii=False, default=str)
 
 if __name__ == "__main__":
     print(ROOT)
