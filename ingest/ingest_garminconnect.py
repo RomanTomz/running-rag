@@ -43,9 +43,11 @@ def get_activities_page(api: Garmin, start: int, limit: int, retries: int = 3, b
             time.sleep(base_sleep * (2 ** attempt))
             if attempt == retries - 1:
                 raise
-
+# Get all activities with paging - login once and fetch all pages
+# This is a simple implementation that fetches all activities in pages.
+# It can be adjusted to filter by date or type if needed.
 def get_all_activities(page_size: int = 50, pause_between_pages: float = 1) -> List[dict]:
-    api = get_api()                # <-- LOGIN ONCE
+    api = get_api()               
     all_items: List[dict] = []
     start = 0
     while True:
@@ -54,7 +56,7 @@ def get_all_activities(page_size: int = 50, pause_between_pages: float = 1) -> L
             break
         all_items.extend(page)
         start += page_size
-        time.sleep(pause_between_pages)  # be polite; reduce chance of 429s
+        time.sleep(pause_between_pages) 
     return all_items
 
 # --- dataframe ---------------------------------------------------------------
