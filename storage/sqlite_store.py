@@ -81,7 +81,35 @@ def upsert_activities(df: pd.DataFrame) -> tuple[int, int, list[int]]:
                     insert into activities_raw(activity_id, start_time, type_key, payload_json, inserted_at)
                     values (?, ?, ?, ?, ?)
                     on conflict(activity_id) do nothing
+                    """,
+                    (aid, start, type_key, payload, now),
+                )
+
+                if cur.rowcount == 0:
+                    skipped += 1
+                else:
+                    inserted += 1
+                    new_ids.append(aid)
+
+                con.execute(
                     """
+                    insert into activities_flat(activity_id, start_time, type_key, distance_m, duration_s, avg_hr, location, inserted_at)
+                    values (?, ?, ?, ?, ?, ?, ?, ?)
+                    on conflict(activity_id) do update set
+                        start_time = excluded.start_time,
+                        type_key = excluded.type_key,
+                        distance_m = excluded.distance_m,
+                        duration_s = excluded.duration_s,
+                        avg_hr = excluded.avg_hr,
+                        location = excluded.location
+                    """,
+                    (
+                        aid,
+                        start,
+                        type_key,
+                        float(row.get("distance") or 0.0),
+                        float(row.get("duration") or row.get("movingDuration") or 0.0)
+                    )
                 )
 
 if __name__ == "__main__":
