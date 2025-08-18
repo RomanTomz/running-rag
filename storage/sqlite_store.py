@@ -76,6 +76,14 @@ def upsert_activities(df: pd.DataFrame) -> tuple[int, int, list[int]]:
                 type_key = str(row.get("activityType.typeKey") or row.get("sportTypeId") or "")
                 payload = json.dumps(row.to_dict(), ensure_ascii=False, default=str)
 
+                cur = con.execute(
+                    """
+                    insert into activities_raw(activity_id, start_time, type_key, payload_json, inserted_at)
+                    values (?, ?, ?, ?, ?)
+                    on conflict(activity_id) do nothing
+                    """
+                )
+
 if __name__ == "__main__":
     print(ROOT)
     print(DB_PATH)
